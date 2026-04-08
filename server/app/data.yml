@@ -18,12 +18,11 @@ defaults:
       storage: ./db.sqlite
       sslOptions:
         auto: true
-      min: 2
       sessionCleanupInterval: 60000
     ssl:
       enabled: false
     pool:
-      min: 1
+      min: 2
     bindIP: 0.0.0.0
     logLevel: info
     logFormat: default

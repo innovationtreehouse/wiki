@@ -31,9 +31,6 @@ db:
   db: wiki
   ssl: false
 
-  # Optional - Minimum number of DB connections in the pool (default: 2)
-  # min: 2
-
   # Optional - How often (in ms) to clean up expired sessions from the DB (default: 86400000 = 1 day)
   # sessionCleanupInterval: 86400000
 

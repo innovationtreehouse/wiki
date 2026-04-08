@@ -9,8 +9,9 @@ db:
   db: $(DB_NAME)
   storage: $(DB_FILEPATH)
   ssl: $(DB_SSL)
-  min: $(DB_POOL_MIN:2)
   sessionCleanupInterval: $(DB_SESSION_CLEANUP_INTERVAL:60000)
+pool:
+  min: $(DB_POOL_MIN:2)
 ssl:
   enabled: $(SSL_ACTIVE)
   port: 3443
