@@ -25,12 +25,21 @@ router.get('/robots.txt', (req, res, next) => {
 /**
  * Health Endpoint
  */
-router.get('/healthz', (req, res, next) => {
-  if (WIKI.models.knex.client.pool.numFree() < 1 && WIKI.models.knex.client.pool.numUsed() < 1) {
-    res.status(503).json({ ok: false }).end()
-  } else {
-    res.status(200).json({ ok: true }).end()
+let healthLastCheck = 0
+let healthLastOk = false
+
+router.get('/healthz', async (req, res, next) => {
+  const now = Date.now()
+  if (now - healthLastCheck > WIKI.config.db.healthCheckInterval) {
+    try {
+      await WIKI.models.knex.raw('SELECT 1')
+      healthLastOk = true
+    } catch (err) {
+      healthLastOk = false
+    }
+    healthLastCheck = now
   }
+  res.status(healthLastOk ? 200 : 503).json({ ok: healthLastOk }).end()
 })
 
 /**

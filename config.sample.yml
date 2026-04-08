@@ -34,6 +34,9 @@ db:
   # Optional - How often (in ms) to clean up expired sessions from the DB (default: 86400000 = 1 day)
   # sessionCleanupInterval: 86400000
 
+  # Optional - How often (in ms) the /healthz endpoint checks the DB (default: 14400000 = 4 hours)
+  # healthCheckInterval: 14400000
+
   # Optional - PostgreSQL / MySQL / MariaDB only:
   # -> Uncomment lines you need below and set `auto` to false
   # -> Full list of accepted options: https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options

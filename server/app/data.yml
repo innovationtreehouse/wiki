@@ -19,6 +19,7 @@ defaults:
       sslOptions:
         auto: true
       sessionCleanupInterval: 60000
+      healthCheckInterval: 14400000
     ssl:
       enabled: false
     pool:

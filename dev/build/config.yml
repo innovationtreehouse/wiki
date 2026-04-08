@@ -10,6 +10,7 @@ db:
   storage: $(DB_FILEPATH)
   ssl: $(DB_SSL)
   sessionCleanupInterval: $(DB_SESSION_CLEANUP_INTERVAL:60000)
+  healthCheckInterval: $(DB_HEALTH_CHECK_INTERVAL:14400000)
 pool:
   min: $(DB_POOL_MIN:2)
 ssl:
