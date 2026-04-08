@@ -19,7 +19,7 @@ defaults:
       sslOptions:
         auto: true
       min: 2
-      sessionCleanupInterval: 86400000
+      sessionCleanupInterval: 60000
     ssl:
       enabled: false
     pool:
