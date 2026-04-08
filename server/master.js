@@ -75,7 +75,21 @@ module.exports = async () => {
   // Health Endpoint (before Passport to avoid DB queries on healthcheck)
   // ----------------------------------------
 
-  app.use('/', ctrl.common)
+  let healthLastCheck = 0
+  let healthLastOk = false
+  app.get('/healthz', async (req, res) => {
+    const now = Date.now()
+    if (now - healthLastCheck > WIKI.config.db.healthCheckInterval) {
+      try {
+        await WIKI.models.knex.raw('SELECT 1')
+        healthLastOk = true
+      } catch (err) {
+        healthLastOk = false
+      }
+      healthLastCheck = now
+    }
+    res.status(healthLastOk ? 200 : 503).json({ ok: healthLastOk }).end()
+  })
 
   // ----------------------------------------
   // Passport Authentication
@@ -171,6 +185,7 @@ module.exports = async () => {
 
   app.use('/', ctrl.auth)
   app.use('/', ctrl.upload)
+  app.use('/', ctrl.common)
 
   // ----------------------------------------
   // Error handling

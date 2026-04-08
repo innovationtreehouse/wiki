@@ -22,25 +22,6 @@ router.get('/robots.txt', (req, res, next) => {
   }
 })
 
-/**
- * Health Endpoint
- */
-let healthLastCheck = 0
-let healthLastOk = false
-
-router.get('/healthz', async (req, res, next) => {
-  const now = Date.now()
-  if (now - healthLastCheck > WIKI.config.db.healthCheckInterval) {
-    try {
-      await WIKI.models.knex.raw('SELECT 1')
-      healthLastOk = true
-    } catch (err) {
-      healthLastOk = false
-    }
-    healthLastCheck = now
-  }
-  res.status(healthLastOk ? 200 : 503).json({ ok: healthLastOk }).end()
-})
 
 /**
  * Administration
