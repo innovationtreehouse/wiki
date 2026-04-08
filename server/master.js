@@ -82,7 +82,7 @@ module.exports = async () => {
     saveUninitialized: false,
     store: new KnexSessionStore({
       knex: WIKI.models.knex,
-      clearInterval: 3600000
+      clearInterval: 86400000
     })
   }))
   app.use(WIKI.auth.passport.initialize())
