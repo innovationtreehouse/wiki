@@ -37,6 +37,22 @@ db:
   # Optional - How often (in ms) the /healthz endpoint checks the DB (default: 14400000 = 4 hours)
   # healthCheckInterval: 14400000
 
+# ---------------------------------------------------------------------
+# Analytics
+# ---------------------------------------------------------------------
+
+# analytics:
+  # Optional - How long (in seconds) to cache analytics config (default: 86400 = 1 day)
+  # cacheTTL: 86400
+
+# ---------------------------------------------------------------------
+# Authentication
+# ---------------------------------------------------------------------
+
+# auth:
+  # Optional - How long (in seconds) to cache deserialized users (default: 14400 = 4 hours, 0 to disable)
+  # userCacheTTL: 14400
+
   # Optional - PostgreSQL / MySQL / MariaDB only:
   # -> Uncomment lines you need below and set `auto` to false
   # -> Full list of accepted options: https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options

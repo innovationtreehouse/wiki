@@ -22,3 +22,7 @@ ssl:
 logLevel: $(LOG_LEVEL:info)
 logFormat: $(LOG_FORMAT:default)
 ha: $(HA_ACTIVE)
+analytics:
+  cacheTTL: $(ANALYTICS_CACHE_TTL:86400)
+auth:
+  userCacheTTL: $(AUTH_USER_CACHE_TTL:14400)

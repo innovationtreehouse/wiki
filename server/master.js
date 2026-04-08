@@ -72,6 +72,12 @@ module.exports = async () => {
   app.use('/', ctrl.ssl)
 
   // ----------------------------------------
+  // Health Endpoint (before Passport to avoid DB queries on healthcheck)
+  // ----------------------------------------
+
+  app.use('/', ctrl.common)
+
+  // ----------------------------------------
   // Passport Authentication
   // ----------------------------------------
 
@@ -165,7 +171,6 @@ module.exports = async () => {
 
   app.use('/', ctrl.auth)
   app.use('/', ctrl.upload)
-  app.use('/', ctrl.common)
 
   // ----------------------------------------
   // Error handling

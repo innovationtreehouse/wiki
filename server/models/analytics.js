@@ -127,7 +127,7 @@ module.exports = class Analytics extends Model {
         analyticsCode.bodyEnd += code.bodyEnd
       }
 
-      await WIKI.cache.set('analytics', analyticsCode, 300)
+      await WIKI.cache.set('analytics', analyticsCode, WIKI.config.analytics.cacheTTL)
 
       return analyticsCode
     } catch (err) {

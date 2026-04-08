@@ -63,6 +63,8 @@ defaults:
       iconset: 'md'
       darkMode: false
       tocPosition: 'left'
+    analytics:
+      cacheTTL: 86400
     auth:
       autoLogin: false
       enforce2FA: false
@@ -71,6 +73,7 @@ defaults:
       audience: 'urn:wiki.js'
       tokenExpiration: '30m'
       tokenRenewal: '14d'
+      userCacheTTL: 14400
     editShortcuts:
       editFab: true
       editMenuBar: false
