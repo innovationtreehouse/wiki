@@ -181,7 +181,7 @@ module.exports = {
       if (!user) {
         if (WIKI.auth.guest.cacheExpiration <= DateTime.utc()) {
           WIKI.auth.guest = await WIKI.models.users.getGuestUser()
-          WIKI.auth.guest.cacheExpiration = DateTime.utc().plus({ minutes: 1 })
+          WIKI.auth.guest.cacheExpiration = DateTime.utc().plus({ seconds: WIKI.config.auth.guestCacheTTL })
         }
         req.user = WIKI.auth.guest
         return next()

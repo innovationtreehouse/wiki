@@ -45,7 +45,7 @@ module.exports = class Navigation extends Model {
 
       for (const tree of navTree.config) {
         if (cache) {
-          await WIKI.cache.set(`nav:sidebar:${tree.locale}`, tree.items, 300)
+          await WIKI.cache.set(`nav:sidebar:${tree.locale}`, tree.items, WIKI.config.nav.cacheTTL)
         }
       }
       if (bypassAuth) {
