@@ -75,11 +75,16 @@ module.exports = async () => {
   // Health Endpoint (before Passport to avoid DB queries on healthcheck)
   // ----------------------------------------
 
+  // A success is cached for the full interval (keeps the DB idle), but a failure
+  // is only cached briefly — /healthz is the ALB + ECS health check, and pinning
+  // one transient DB blip as 503 for the whole interval would cycle healthy tasks.
+  const HEALTH_FAIL_RECHECK_MS = 60 * 1000
   let healthLastCheck = 0
   let healthLastOk = false
   app.get('/healthz', async (req, res) => {
     const now = Date.now()
-    if (now - healthLastCheck > WIKI.config.db.healthCheckInterval) {
+    const maxAge = healthLastOk ? WIKI.config.db.healthCheckInterval : HEALTH_FAIL_RECHECK_MS
+    if (now - healthLastCheck > maxAge) {
       try {
         await WIKI.models.knex.raw('SELECT 1')
         healthLastOk = true

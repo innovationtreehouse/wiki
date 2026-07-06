@@ -362,6 +362,9 @@ module.exports = {
     const groupsArray = await WIKI.models.groups.query()
     this.groups = _.keyBy(groupsArray, 'id')
     WIKI.auth.guest.cacheExpiration = DateTime.utc().minus({ days: 1 })
+    // Cached deserialized users embed group permissions — drop them so
+    // group/permission changes take effect immediately, not after userCacheTTL.
+    this.userCache.flushAll()
   },
 
   /**
