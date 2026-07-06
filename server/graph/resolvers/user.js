@@ -135,6 +135,7 @@ module.exports = {
         await WIKI.models.users.query().patch({ isActive: false }).findById(args.id)
 
         WIKI.auth.revokeUserTokens({ id: args.id, kind: 'u' })
+        WIKI.auth.userCache.del(args.id)
         WIKI.events.outbound.emit('addAuthRevoke', { id: args.id, kind: 'u' })
 
         return {

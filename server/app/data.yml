@@ -18,10 +18,12 @@ defaults:
       storage: ./db.sqlite
       sslOptions:
         auto: true
+      sessionCleanupInterval: 86400000
+      healthCheckInterval: 14400000
     ssl:
       enabled: false
     pool:
-      min: 1
+      min: 2
     bindIP: 0.0.0.0
     logLevel: info
     logFormat: default
@@ -61,6 +63,8 @@ defaults:
       iconset: 'md'
       darkMode: false
       tocPosition: 'left'
+    analytics:
+      cacheTTL: 86400
     auth:
       autoLogin: false
       enforce2FA: false
@@ -69,6 +73,7 @@ defaults:
       audience: 'urn:wiki.js'
       tokenExpiration: '30m'
       tokenRenewal: '14d'
+      userCacheTTL: 14400
     editShortcuts:
       editFab: true
       editMenuBar: false

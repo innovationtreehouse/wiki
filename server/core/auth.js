@@ -21,6 +21,7 @@ module.exports = {
   groups: {},
   validApiKeys: [],
   revocationList: require('./cache').init(),
+  userCache: require('./cache').init(),
 
   /**
    * Initialize the authentication module
@@ -34,10 +35,20 @@ module.exports = {
 
     passport.deserializeUser(async (id, done) => {
       try {
+        const ttl = WIKI.config.auth.userCacheTTL
+        if (ttl > 0) {
+          const cached = this.userCache.get(id)
+          if (cached !== undefined) {
+            return done(null, cached)
+          }
+        }
         const user = await WIKI.models.users.query().findById(id).withGraphFetched('groups').modifyGraph('groups', builder => {
           builder.select('groups.id', 'permissions')
         })
         if (user) {
+          if (ttl > 0) {
+            this.userCache.set(id, user, ttl)
+          }
           done(null, user)
         } else {
           done(new Error(WIKI.lang.t('auth:errors:usernotfound')), null)
@@ -351,6 +362,9 @@ module.exports = {
     const groupsArray = await WIKI.models.groups.query()
     this.groups = _.keyBy(groupsArray, 'id')
     WIKI.auth.guest.cacheExpiration = DateTime.utc().minus({ days: 1 })
+    // Cached deserialized users embed group permissions — drop them so
+    // group/permission changes take effect immediately, not after userCacheTTL.
+    this.userCache.flushAll()
   },
 
   /**

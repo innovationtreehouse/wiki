@@ -731,6 +731,8 @@ module.exports = class User extends Model {
         usrData.appearance = appearance
       }
       await WIKI.models.users.query().patch(usrData).findById(id)
+      // Drop the deserialize cache so group/permission changes apply immediately
+      WIKI.auth.userCache.del(id)
     } else {
       throw new WIKI.Error.UserNotFound()
     }
@@ -752,6 +754,7 @@ module.exports = class User extends Model {
 
       await WIKI.models.userKeys.query().delete().where('userId', id)
       await WIKI.models.users.query().deleteById(id)
+      WIKI.auth.userCache.del(id)
     } else {
       throw new WIKI.Error.UserNotFound()
     }
