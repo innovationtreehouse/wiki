@@ -38,6 +38,16 @@ db:
   # healthCheckInterval: 14400000
 
 # ---------------------------------------------------------------------
+# Navigation
+# ---------------------------------------------------------------------
+
+# nav:
+  # Optional - How long (in seconds) to cache the sidebar navigation tree (default: 3600 = 1 hour)
+  # A longer TTL means fewer periodic DB queries (helps Aurora Serverless idle/pause);
+  # admin "Flush Cache" forces an immediate refresh.
+  # cacheTTL: 3600
+
+# ---------------------------------------------------------------------
 # Analytics
 # ---------------------------------------------------------------------
 
@@ -52,6 +62,11 @@ db:
 # auth:
   # Optional - How long (in seconds) to cache deserialized users (default: 14400 = 4 hours, 0 to disable)
   # userCacheTTL: 14400
+
+  # Optional - How long (in seconds) to cache the guest user + its permissions (default: 3600 = 1 hour)
+  # A longer TTL means fewer periodic DB queries on anonymous/crawler traffic; changing group
+  # permissions force-refreshes it immediately.
+  # guestCacheTTL: 3600
 
   # Optional - PostgreSQL / MySQL / MariaDB only:
   # -> Uncomment lines you need below and set `auto` to false

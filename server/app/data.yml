@@ -58,6 +58,7 @@ defaults:
       verifySSL: true
     nav:
       mode: 'MIXED'
+      cacheTTL: 3600
     theming:
       theme: 'default'
       iconset: 'md'
@@ -74,6 +75,7 @@ defaults:
       tokenExpiration: '30m'
       tokenRenewal: '14d'
       userCacheTTL: 14400
+      guestCacheTTL: 3600
     editShortcuts:
       editFab: true
       editMenuBar: false
